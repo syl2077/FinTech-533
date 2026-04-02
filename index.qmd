@@ -1,5 +1,8 @@
 ---
 title: "FINTECH 533"
+subtitle: "Duke University"
 ---
+
+![](images/duke-logo.png){fig-align="center" width="400"}
 
 This is the course website for FINTECH 533 at Duke University.
