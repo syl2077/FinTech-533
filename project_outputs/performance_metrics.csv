@@ -1,0 +1,2 @@
+trade_count,average_return_per_trade_pct,sharpe_ratio,sortino_ratio,max_drawdown_pct,win_rate_pct,profit_factor,expectancy_dollars,final_equity,risk_free_rate
+29,3.293515777145803,1.024135348760213,1.8156123917891673,-15.583625254990618,62.06896551724138,2.37341564799803,4743.432344973661,237559.53800423618,0.02

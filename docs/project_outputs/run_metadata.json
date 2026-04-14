@@ -1,0 +1,35 @@
+{
+  "selected_symbol": "MU",
+  "metrics": {
+    "trade_count": 29,
+    "average_return_per_trade_pct": 3.293515777145803,
+    "sharpe_ratio": 1.024135348760213,
+    "sortino_ratio": 1.8156123917891673,
+    "max_drawdown_pct": -15.583625254990618,
+    "win_rate_pct": 62.06896551724138,
+    "profit_factor": 2.37341564799803,
+    "expectancy_dollars": 4743.432344973661,
+    "final_equity": 237559.53800423618,
+    "risk_free_rate": 0.02
+  },
+  "strategy_parameters": {
+    "lookback_candidates": [
+      20,
+      40,
+      55
+    ],
+    "atr_window": 14,
+    "breakout_buffer": 0.0,
+    "stop_loss_atr_candidates": [
+      1.5,
+      2.0
+    ],
+    "profit_target_atr_candidates": [
+      2.0,
+      3.0
+    ],
+    "timeout_days": 10,
+    "training_window_days": 252,
+    "test_window_days": 63
+  }
+}

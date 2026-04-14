@@ -1,14 +1,15 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - project_outputs/**
 
 website:
-  title: "FINTECH 533"
+  title: "Breakout Strategy Backtest"
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: Project
 
 format:
   html:

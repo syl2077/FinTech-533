@@ -1,16 +1,100 @@
 [
   {
+    "objectID": "PROJECT_README.html",
+    "href": "PROJECT_README.html",
+    "title": "Breakout Project Workflow",
+    "section": "",
+    "text": "Breakout Project Workflow\n\nStart IB Gateway or TWS in paper mode so shinybroker can request data from 127.0.0.1:7497.\nFrom the project root, run:\n../.venv-1/bin/python breakout_project.py --force-download\nTo force a specific asset instead of the default symbol, use:\n../.venv-1/bin/python breakout_project.py --asset NVDA --force-download\nTo screen several assets and let the script choose the best one, use:\n../.venv-1/bin/python breakout_project.py --symbols MU AAPL NVDA GLD --force-download\nRe-render the site:\nenv XDG_CACHE_HOME=/tmp/quarto-cache DENO_DIR=/tmp/deno-dir HOME=/tmp/quarto-home quarto render\nCommit the updated project_outputs/ source files plus the regenerated docs/ site output.\n\nThe analysis code lives at the project root because Quarto clears docs/ before each render. The published GitHub Pages artifacts still end up in docs/, and docs/pull_data.py remains there as the original ShinyBroker reference structure."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Breakout Strategy Backtest",
+    "section": "",
+    "text": "Asset View\n    \n    Use this selector to swap the webpage between assets that were generated in the latest backtest run.\n  \n  \n    Choose asset\n    \n    Loading asset dashboard...\nThis page documents a rules-based breakout strategy built for FINTECH 533. The analysis is designed to be reproducible from the project files, with a walk-forward backtest, downloadable trade blotter, and plain-English explanations of the exact breakout logic."
+  },
+  {
+    "objectID": "index.html#strategy-logic",
+    "href": "index.html#strategy-logic",
+    "title": "Breakout Strategy Backtest",
+    "section": "Strategy Logic",
+    "text": "Strategy Logic\nThe strategy looks for assets that are breaking above their recent trading range and then holds those positions only if the move keeps working. Each day, the code checks whether the latest close finished above the highest high from the prior lookback window. If that breakout is confirmed, the strategy buys at the next session’s open, sets a volatility-scaled stop-loss and profit target using Average True Range (ATR), and exits on the first event that occurs: profit target hit, stop-loss hit, or a timeout after a fixed number of trading days."
+  },
+  {
+    "objectID": "index.html#asset-selection",
+    "href": "index.html#asset-selection",
+    "title": "Breakout Strategy Backtest",
+    "section": "Asset Selection",
+    "text": "Asset Selection\nThe strategy screens a small universe of liquid assets and lets the page switch between the resulting backtests. The table below shows the most recent screening results, and the paragraph underneath updates when you choose a different asset above."
+  },
+  {
+    "objectID": "index.html#breakout-definition",
+    "href": "index.html#breakout-definition",
+    "title": "Breakout Strategy Backtest",
+    "section": "Breakout Definition",
+    "text": "Breakout Definition\nThe breakout detection function is detect_breakouts() in breakout_project.py. In plain English, it flags a breakout only when today’s closing price finishes above the highest high from the previous N sessions, where N is the Donchian-style lookback window. That prior high is shifted back one bar so the function never uses today’s own high to define today’s threshold. The same function also computes ATR so the trade management logic can place exits relative to current volatility instead of using arbitrary dollar cutoffs.\nAll strategy parameters are exposed as named constants near the top of breakout_project.py. The current project setup uses:\n\nLookback candidates: 20, 40, and 55 days\nATR window: 14 days\nBreakout buffer: 0.00%\nStop-loss candidates: 1.5x or 2.0x ATR\nProfit-target candidates: 2.0x or 3.0x ATR\nTimeout period: 10 trading days\nWalk-forward training window: 252 trading days\nWalk-forward out-of-sample test window: 63 trading days\n\nWithin each walk-forward cycle, the model selects the best parameter set on the prior one-year training window and then applies that choice to the next out-of-sample test block. This keeps the parameter search transparent while reducing simple overfitting."
+  },
+  {
+    "objectID": "index.html#data-assumptions-and-replication",
+    "href": "index.html#data-assumptions-and-replication",
+    "title": "Breakout Strategy Backtest",
+    "section": "Data, Assumptions, and Replication",
+    "text": "Data, Assumptions, and Replication\nThe data loader follows the same shinybroker structure already established in docs/pull_data.py: define an IB contract, request historical bars, and convert the result into a pandas DataFrame. The project expects at least two years of daily history, uses next-day-open entries after confirmed signals, assumes 5 basis points of slippage per side, and charges $1.00 commission per side. If both the stop-loss and the profit target would have been touched on the same bar, the backtest takes the conservative path and assumes the stop-loss happened first."
+  },
+  {
+    "objectID": "index.html#performance-metrics",
+    "href": "index.html#performance-metrics",
+    "title": "Breakout Strategy Backtest",
+    "section": "Performance Metrics",
+    "text": "Performance Metrics"
+  },
+  {
+    "objectID": "index.html#trade-outcome-analysis",
+    "href": "index.html#trade-outcome-analysis",
+    "title": "Breakout Strategy Backtest",
+    "section": "Trade Outcome Analysis",
+    "text": "Trade Outcome Analysis\nThe chart below groups every completed trade into one of the required outcome buckets: successful, timed out, or stop-loss triggered."
+  },
+  {
+    "objectID": "index.html#trade-ledger-and-blotter",
+    "href": "index.html#trade-ledger-and-blotter",
+    "title": "Breakout Strategy Backtest",
+    "section": "Trade Ledger and Blotter",
+    "text": "Trade Ledger and Blotter\nDownload the complete blotter here: trade_blotter.csv"
+  },
+  {
+    "objectID": "index.html#equity-curve",
+    "href": "index.html#equity-curve",
+    "title": "Breakout Strategy Backtest",
+    "section": "Equity Curve",
+    "text": "Equity Curve"
+  },
+  {
+    "objectID": "index.html#walk-forward-window-log",
+    "href": "index.html#walk-forward-window-log",
+    "title": "Breakout Strategy Backtest",
+    "section": "Walk-Forward Window Log",
+    "text": "Walk-Forward Window Log\nThis table records which parameters were selected in each training window and how many trades appeared in the following out-of-sample block."
+  },
+  {
+    "objectID": "project_outputs/project_summary.html",
+    "href": "project_outputs/project_summary.html",
+    "title": "Breakout Strategy Backtest",
+    "section": "",
+    "text": "Selected asset: MU\nData span: 2021-04-14 to 2026-04-13\nTimeout period: 10 trading days\nStop-loss logic: entry price - ATR x selected stop multiplier\nProfit-target logic: entry price + ATR x selected target multiplier\nExecution assumptions: next-day open entry, 5 bps slippage each side, $1.00 commission per side."
+  },
+  {
+    "objectID": "project_outputs/asset_selection.html",
+    "href": "project_outputs/asset_selection.html",
+    "title": "Breakout Strategy Backtest",
+    "section": "",
+    "text": "I screened 5 liquid U.S. assets using the same daily breakout logic and selected MU for the final write-up because it produced the strongest out-of-sample mix of trade frequency and risk-adjusted performance. In the walk-forward test, MU generated 29 completed trades with an annualized Sharpe ratio of 1.02 and an average return per trade of 3.29%. To force a different single asset, rerun the pipeline with ../.venv-1/bin/python breakout_project.py --asset SYMBOL --force-download. To screen a custom universe, use --symbols SYMBOL1 SYMBOL2 ...."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "About this site."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "FINTECH 533",
-    "section": "",
-    "text": "This is the course website for FINTECH 533 at Duke University."
   }
 ]
